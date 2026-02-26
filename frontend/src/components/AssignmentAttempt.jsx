@@ -17,7 +17,7 @@ function AssignmentAttempt(props) {
     const currentUser = localStorage.getItem("cipherUser");
 
     try {
-      const response = await fetch("http://localhost:4000/api/sql/execute", {
+      const response = await fetch("https://ciphersql-studio-at9e.onrender.com/api/sql/execute", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -47,7 +47,7 @@ function AssignmentAttempt(props) {
       console.log("Sending to Backend:", query);
       setHint("Thinking... Please wait.");
 
-      const response = await fetch("http://localhost:4000/api/sql/hint", {
+      const response = await fetch("https://ciphersql-studio-at9e.onrender.com/api/sql/hint", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -25,7 +25,7 @@ function Auth(props) {
     }
 
     const endpoint = isLogin ? "/login" : "/signup";
-    const url = `http://localhost:4000/api/auth${endpoint}`;
+    const url = `https://ciphersql-studio-at9e.onrender.com/api/auth${endpoint}`;
 
     try {
       const response = await fetch(url, {
@@ -155,7 +155,7 @@ function Auth(props) {
           <button
             type="submit"
             disabled={loading}
-            className={`${styles.submitBtn} ${loading ? styles.loading : ""}`}
+            className={`${styles.submitBtn} ${loading ? styles.loading : ""} `}
           >
             {loading ? (
               <>

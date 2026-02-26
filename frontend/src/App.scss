@@ -1,0 +1,379 @@
+@use "sass:color";
+
+$primary-color: #4f46e5;
+$secondary-color: #1e1b4b;
+$background-color: #f3f4f6;
+$card-bg: #ffffff;
+$text-dark: #1f2937;
+$text-light: #6b7280;
+$shadow:
+  0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$radius: 12px;
+
+// ============================================
+// 2. MIXINS
+// ============================================
+@mixin tablet {
+  @media (min-width: 641px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// ============================================
+// 3. MAIN STYLING
+// ============================================
+body {
+  margin: 0;
+  background-color: $background-color;
+}
+
+.app-container {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  padding: 0;
+
+  // --- Header Section ---
+  &__header {
+    background: linear-gradient(
+      135deg,
+      $primary-color 0%,
+      $secondary-color 100%
+    );
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    @include flex-between;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    div {
+      font-size: 0.95rem;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 8px 16px;
+      border-radius: 50px;
+      backdrop-filter: blur(5px);
+
+      button {
+        background: #ef4444;
+        color: white;
+        border: none;
+        padding: 5px 12px;
+        border-radius: 20px;
+        margin-left: 10px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: transform 0.2s;
+
+        &:hover {
+          transform: scale(1.05);
+          background: #dc2626;
+        }
+      }
+    }
+  }
+
+  // --- Main Content Area ---
+  main {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+
+  // --- Assignment List Grid ---
+  .assignment-list {
+    h2 {
+      color: $secondary-color;
+      border-bottom: 3px solid $primary-color;
+      display: inline-block;
+      padding-bottom: 5px;
+      margin-bottom: 25px;
+    }
+
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include desktop {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  // --- Assignment Card ---
+  .assignment-card {
+    background: $card-bg;
+    border: none;
+    border-radius: $radius;
+    padding: 24px;
+    box-shadow: $shadow;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: $primary-color;
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    &__title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: $text-dark;
+      margin-bottom: 10px;
+    }
+
+    &__difficulty {
+      font-size: 0.75rem;
+      color: $text-light;
+      background: #f3f4f6;
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-bottom: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      align-self: flex-start;
+
+      &.easy {
+        background-color: #d1fae5;
+        color: #065f46;
+      }
+
+      &.medium {
+        background-color: #ffedd5;
+        color: #9a3412;
+      }
+
+      &.hard {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+    }
+
+    p {
+      color: $text-light;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    button {
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      width: 100%;
+      transition: background 0.3s;
+
+      &:hover {
+        background-color: color.adjust($primary-color, $lightness: -10%);
+      }
+    }
+  }
+}
+
+// ============================================
+// ASSIGNMENT ATTEMPT / EDITOR PAGE
+// ============================================
+
+.attempt-container {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  max-width: 1000px;
+  margin: 0 auto;
+
+  // Question Header
+  .question-header {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 15px;
+
+    h3 {
+      font-size: 1.5rem;
+      color: #1e1b4b;
+      margin-bottom: 8px;
+    }
+
+    .schema-info {
+      font-family: "Consolas", "Monaco", monospace;
+      background: #e0e7ff;
+      color: #4338ca;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      display: inline-block;
+    }
+  }
+
+  // Editor Area
+  .editor-wrapper {
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden; // Curves the editor corners
+    margin-bottom: 20px;
+
+    // Header strip above code
+    .editor-label {
+      background: #f9fafb;
+      padding: 8px 15px;
+      font-size: 0.85rem;
+      color: #6b7280;
+      border-bottom: 1px solid #e5e7eb;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      &::before {
+        content: "⚡";
+      }
+    }
+  }
+
+  // Action Buttons (Toolbar)
+  .action-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+
+      &.run-btn {
+        background-color: #4f46e5; // Indigo
+        color: white;
+        &:hover {
+          background-color: #4338ca;
+          transform: translateY(-2px);
+        }
+      }
+
+      &.hint-btn {
+        background-color: #f59e0b; // Amber/Orange
+        color: white;
+        &:hover {
+          background-color: #d97706;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  // Hint Box
+  .hint-box {
+    background-color: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    color: #92400e;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-style: italic;
+  }
+
+  // Results Section (The Console)
+  .results-section {
+    background: #111827; // Dark Terminal Look
+    border-radius: 8px;
+    padding: 20px;
+    color: #fff;
+    min-height: 150px;
+
+    h4 {
+      color: #9ca3af;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #374151;
+      padding-bottom: 10px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    // JSON/Error Text styling
+    .console-text {
+      font-family: "Consolas", monospace;
+      color: #10b981; // Terminal Green
+    }
+
+    .error-text {
+      color: #ef4444; // Red for errors
+    }
+
+    // Modern Table Styling
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      font-family: sans-serif;
+
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #374151;
+      }
+
+      th {
+        color: #9ca3af;
+        font-weight: 600;
+      }
+
+      td {
+        color: #e5e7eb;
+      }
+
+      tr:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+    }
+  }
+}

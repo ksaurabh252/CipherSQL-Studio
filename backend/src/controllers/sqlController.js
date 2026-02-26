@@ -5,8 +5,10 @@ require("dotenv").config();
 
 // 1. PostgreSQL Setup
 const pgClient = new Client({
-  connectionString:
-    "postgresql://postgres:Gaya%40123@localhost:5432/sandbox_db",
+  connectionString: process.env.PG_URI,
+  SSL: {
+    rejectUnauthorized: false,
+  },
 });
 
 pgClient
